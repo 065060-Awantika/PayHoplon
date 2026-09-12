@@ -3,12 +3,11 @@ import pandas as pd
 import plotly.express as px
 import random
 import uuid
-import textwrap
 from datetime import datetime, timedelta
 
-# =============================================================================
+# ============================================================
 # PAGE CONFIG
-# =============================================================================
+# ============================================================
 
 st.set_page_config(
     page_title="PayHoplon",
@@ -17,81 +16,28 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# =============================================================================
-# HELPER FOR HTML
-# =============================================================================
+# ============================================================
+# DARK FINTECH THEME
+# ============================================================
 
-def render_html(html):
-    st.markdown(
-        textwrap.dedent(html),
-        unsafe_allow_html=True
-    )
-
-# =============================================================================
-# DARK PROFESSIONAL THEME
-# =============================================================================
-
-render_html("""
+st.markdown("""
 <style>
 
-@import url(
-'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
-);
-
-/* ============================================================
-   COLORS
-   ============================================================ */
-
-:root {
-    --bg: #071014;
-    --bg-dark: #050D10;
-    --panel: #101C22;
-    --panel-2: #14242A;
-    --border: #263B42;
-    --text: #F1F7F5;
-    --muted: #8EA4A6;
-
-    --green: #2DD4A8;
-    --green-dark: #159C7E;
-
-    --amber: #F2B84B;
-    --red: #F06A73;
-    --purple: #9B8AFB;
-}
-
-/* ============================================================
-   GLOBAL
-   ============================================================ */
-
-html,
-body,
-.stApp,
-[class*="css"],
-.stMarkdown,
-.stText,
-p,
-span,
-label,
-button,
-input,
-textarea,
-select,
-div {
-    font-family: 'Inter',
-    sans-serif !important;
-}
+/* =========================================================
+   MAIN BACKGROUND
+   ========================================================= */
 
 .stApp {
     background:
         radial-gradient(
-            circle at 78% 4%,
-            rgba(45,212,168,.10),
+            circle at 80% 0%,
+            rgba(45, 212, 168, 0.10),
             transparent 28%
         ),
         radial-gradient(
-            circle at 30% 40%,
-            rgba(25,100,90,.07),
-            transparent 35%
+            circle at 25% 50%,
+            rgba(30, 100, 90, 0.07),
+            transparent 30%
         ),
         #071014 !important;
 
@@ -100,12 +46,30 @@ div {
 
 .block-container {
     max-width: 1450px !important;
-    padding: 1.3rem 2rem 3rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 3rem !important;
 }
 
-/* ============================================================
+
+/* =========================================================
+   GLOBAL TEXT
+   ========================================================= */
+
+.stApp p,
+.stApp span,
+.stApp label,
+.stApp li {
+    color: #D5E1DF !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #F3F8F6 !important;
+}
+
+
+/* =========================================================
    SIDEBAR
-   ============================================================ */
+   ========================================================= */
 
 section[data-testid="stSidebar"] {
     background:
@@ -118,368 +82,86 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid #1D3339 !important;
 }
 
-section[data-testid="stSidebar"] > div {
-    background: transparent !important;
-}
-
 section[data-testid="stSidebar"] * {
     color: #DDE9E6 !important;
 }
 
+section[data-testid="stSidebar"] label {
+    color: #90A7A9 !important;
+    font-weight: 600 !important;
+}
+
 section[data-testid="stSidebar"] input {
-    background: #111E23 !important;
-    color: #F1F7F5 !important;
+    background: #111F24 !important;
+    color: #FFFFFF !important;
     border: 1px solid #2A4047 !important;
 }
 
-section[data-testid="stSidebar"]
-[data-baseweb="select"] > div {
-    background: #111E23 !important;
+section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+    background: #111F24 !important;
     border-color: #2A4047 !important;
 }
 
-section[data-testid="stSidebar"]
-[data-baseweb="select"] span {
-    color: #E4EFEC !important;
+section[data-testid="stSidebar"] [data-baseweb="select"] * {
+    color: #FFFFFF !important;
 }
 
-section[data-testid="stSidebar"]
-.stNumberInput button {
+section[data-testid="stSidebar"] .stNumberInput button {
     background: #17272D !important;
-    color: #DCE9E5 !important;
+    color: #DDE9E6 !important;
     border-color: #2A4047 !important;
 }
 
-section[data-testid="stSidebar"]
-.stSlider [role="slider"] {
+section[data-testid="stSidebar"] .stSlider [role="slider"] {
     background: #2DD4A8 !important;
 }
 
-.sidebar-brand {
-    padding: 5px 2px 24px;
+section[data-testid="stSidebar"] hr {
+    border-color: #21363C !important;
 }
 
-.brand-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
 
-.shield {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
+/* =========================================================
+   SIDEBAR TITLE
+   ========================================================= */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 23px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #16483D,
-            #0A2925
-        );
-
-    border: 1px solid #267C68;
-
-    box-shadow:
-        0 0 25px rgba(45,212,168,.12);
-}
-
-.brand-name {
-    font-size: 1.4rem;
-    font-weight: 800;
+section[data-testid="stSidebar"] h1 {
     color: #F4FAF8 !important;
-    letter-spacing: -.03em;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
 }
 
-.brand-sub {
-    font-size: .64rem;
+section[data-testid="stSidebar"] .stCaption {
     color: #6F888A !important;
-    margin-top: 2px;
-    letter-spacing: .04em;
 }
 
-.sidebar-section {
-    color: #6F8588 !important;
-    font-size: .70rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    margin: 20px 0 10px;
-}
 
-.guardrail-note {
-    margin-top: 20px;
-    padding: 15px;
-
-    border: 1px solid #20383B;
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(45,212,168,.08),
-            rgba(17,29,34,.7)
-        );
-
-    color: #91A8A9 !important;
-    font-size: .74rem;
-    line-height: 1.5;
-}
-
-/* ============================================================
-   TOP BAR
-   ============================================================ */
-
-.topbar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.user-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 7px 11px;
-
-    border-radius: 999px;
-
-    background: #101D22;
-
-    border: 1px solid #263A40;
-
-    color: #A8B9B9 !important;
-
-    font-size: .75rem;
-}
-
-.user-dot {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #1C8069;
-
-    color: white !important;
-    font-weight: 700;
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-
-    padding: 28px 30px;
-
-    border-radius: 20px;
-
-    border: 1px solid #1F383D;
-
-    background:
-        radial-gradient(
-            circle at 82% 0%,
-            rgba(45,212,168,.12),
-            transparent 28%
-        ),
-        linear-gradient(
-            135deg,
-            #0D1C21,
-            #081419
-        );
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.20);
-
-    margin-bottom: 20px;
-}
-
-.hero-kicker {
-    color: #6FA99E !important;
-    font-size: .76rem;
-    font-weight: 600;
-    letter-spacing: .05em;
-    margin-bottom: 6px;
-}
-
-.hero-title {
-    font-size: 2.5rem;
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: -.05em;
-    color: #F4FAF8 !important;
-}
-
-.hero-title .accent {
-    color: #2DD4A8 !important;
-}
-
-.hero-sub {
-    max-width: 720px;
-    color: #94A9AA !important;
-    font-size: .92rem;
-    line-height: 1.55;
-    margin-top: 12px;
-}
-
-.hero-right {
-    position: absolute;
-    right: 34px;
-    top: 32px;
-
-    width: 220px;
-
-    border-left: 2px solid #2DD4A8;
-
-    padding-left: 18px;
-}
-
-.hero-right b {
-    color: #E5F0ED !important;
-    font-size: .85rem;
-}
-
-.hero-right span {
-    color: #2DD4A8 !important;
-    font-size: .82rem;
-    font-weight: 700;
-}
-
-/* ============================================================
-   KPI CARDS
-   ============================================================ */
-
-.kpi {
-    position: relative;
-
-    min-height: 108px;
-
-    padding: 18px;
-
-    border-radius: 16px;
-
-    border: 1px solid #263B42;
-
-    background:
-        linear-gradient(
-            145deg,
-            #122027,
-            #0D191F
-        );
-
-    box-shadow:
-        0 7px 25px rgba(0,0,0,.16);
-
-    overflow: hidden;
-}
-
-.kpi.green {
-    border-color: rgba(45,212,168,.42);
-}
-
-.kpi.amber {
-    border-color: rgba(242,184,75,.38);
-}
-
-.kpi.purple {
-    border-color: rgba(155,138,251,.38);
-}
-
-.kpi-label {
-    color: #8EA3A5 !important;
-    font-size: .69rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-.kpi-value {
-    color: #F3F8F6 !important;
-    font-size: 1.65rem;
-    font-weight: 800;
-    letter-spacing: -.03em;
-}
-
-.kpi-delta {
-    color: #6DA89B !important;
-    font-size: .67rem;
-    margin-top: 6px;
-}
-
-.kpi-icon {
-    position: absolute;
-
-    right: 17px;
-    top: 16px;
-
-    width: 36px;
-    height: 36px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 17px;
-}
-
-.icon-green {
-    background: rgba(45,212,168,.12);
-    color: #2DD4A8 !important;
-}
-
-.icon-amber {
-    background: rgba(242,184,75,.12);
-    color: #F2B84B !important;
-}
-
-.icon-purple {
-    background: rgba(155,138,251,.12);
-    color: #9B8AFB !important;
-}
-
-.icon-slate {
-    background: rgba(145,165,167,.10);
-    color: #B7C5C6 !important;
-}
-
-/* ============================================================
+/* =========================================================
    BUTTONS
-   ============================================================ */
+   ========================================================= */
 
 .stButton > button {
     min-height: 43px !important;
 
     border-radius: 11px !important;
 
+    background: #16272D !important;
+
+    color: #E6F0ED !important;
+
+    border: 1px solid #2A4249 !important;
+
     font-weight: 700 !important;
-
-    background: #17272D !important;
-
-    color: #DCE9E5 !important;
-
-    border: 1px solid #2A4148 !important;
 
     box-shadow: none !important;
 }
 
 .stButton > button:hover {
+    background: #14302D !important;
+
     border-color: #2DD4A8 !important;
+
     color: #2DD4A8 !important;
-    background: #142D2B !important;
 }
 
 button[kind="primary"] {
@@ -490,193 +172,269 @@ button[kind="primary"] {
             #159C7E
         ) !important;
 
-    color: #03120E !important;
+    color: #03130F !important;
 
     border: none !important;
 
     box-shadow:
-        0 5px 20px rgba(45,212,168,.18) !important;
+        0 6px 20px rgba(45,212,168,.16) !important;
 }
 
 button[kind="primary"]:hover {
     background:
         linear-gradient(
             135deg,
-            #42DFB7,
-            #20B18F
+            #43DFB7,
+            #20B38F
         ) !important;
 
     color: #02100C !important;
 }
 
-/* ============================================================
+
+/* =========================================================
+   METRIC CARDS
+   ========================================================= */
+
+div[data-testid="stMetric"] {
+
+    background:
+        linear-gradient(
+            145deg,
+            #122127,
+            #0C181E
+        ) !important;
+
+    border: 1px solid #294047 !important;
+
+    border-radius: 16px !important;
+
+    padding: 18px !important;
+
+    min-height: 110px !important;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.18) !important;
+}
+
+div[data-testid="stMetricLabel"] {
+    color: #8EA4A6 !important;
+}
+
+div[data-testid="stMetricLabel"] * {
+    color: #8EA4A6 !important;
+    font-weight: 600 !important;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #F4FAF8 !important;
+}
+
+div[data-testid="stMetricValue"] * {
+    color: #F4FAF8 !important;
+    font-weight: 800 !important;
+}
+
+div[data-testid="stMetricDelta"] {
+    color: #2DD4A8 !important;
+}
+
+div[data-testid="stMetricDelta"] * {
+    color: #2DD4A8 !important;
+}
+
+
+/* =========================================================
    TABS
-   ============================================================ */
+   ========================================================= */
 
 div[data-baseweb="tab-list"] {
-    gap: 4px !important;
     background: transparent !important;
+
     border-bottom: 1px solid #21363C !important;
+
+    gap: 4px !important;
 }
 
 button[data-baseweb="tab"] {
-    color: #7E9597 !important;
-    font-weight: 700 !important;
     background: transparent !important;
+
+    color: #809698 !important;
+
+    font-weight: 700 !important;
+
     padding: 12px 16px !important;
 }
 
+button[data-baseweb="tab"] * {
+    color: #809698 !important;
+}
+
 button[data-baseweb="tab"]:hover {
-    color: #C0CFCD !important;
+    color: #C2D0CE !important;
+}
+
+button[data-baseweb="tab"]:hover * {
+    color: #C2D0CE !important;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
     color: #2DD4A8 !important;
 }
 
+button[data-baseweb="tab"][aria-selected="true"] * {
+    color: #2DD4A8 !important;
+}
+
 div[data-baseweb="tab-highlight"] {
-    background: #2DD4A8 !important;
+    background-color: #2DD4A8 !important;
+
     height: 3px !important;
 }
 
-/* ============================================================
-   PANELS
-   ============================================================ */
 
-.panel {
-    border: 1px solid #263B42;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #101D23,
-            #0D181E
-        );
-
-    padding: 18px;
-}
-
-.panel-title {
-    color: #EAF3F0 !important;
-    font-weight: 800;
-    font-size: 1rem;
-}
-
-.panel-sub {
-    color: #7E9698 !important;
-    font-size: .75rem;
-    margin-top: 3px;
-}
-
-/* ============================================================
+/* =========================================================
    EXPANDERS
-   ============================================================ */
+   ========================================================= */
 
 div[data-testid="stExpander"] {
-    background: #101C22 !important;
-    border: 1px solid #263B42 !important;
+    background: #101D23 !important;
+
+    border: 1px solid #263C43 !important;
+
     border-radius: 13px !important;
+
     margin-bottom: 8px !important;
 }
 
-div[data-testid="stExpander"] summary,
-div[data-testid="stExpander"] summary span,
-div[data-testid="stExpander"] p {
-    color: #DDE9E6 !important;
+div[data-testid="stExpander"] summary {
+    color: #E5EFEC !important;
 }
 
-/* ============================================================
+div[data-testid="stExpander"] summary * {
+    color: #E5EFEC !important;
+}
+
+
+/* =========================================================
    ALERTS
-   ============================================================ */
+   ========================================================= */
 
 div[data-testid="stAlert"] {
     background: #102229 !important;
-    color: #AFC3C2 !important;
-    border: 1px solid #28424A !important;
+
+    border: 1px solid #29444B !important;
+
     border-radius: 12px !important;
 }
 
-div[data-testid="stAlert"] p,
-div[data-testid="stAlert"] span {
-    color: #AFC3C2 !important;
+div[data-testid="stAlert"] * {
+    color: #B9C9C7 !important;
 }
 
-/* ============================================================
-   DATAFRAME
-   ============================================================ */
 
-div[data-testid="stDataFrame"] {
-    border: 1px solid #263B42 !important;
-    border-radius: 12px !important;
-    overflow: hidden;
-}
-
-/* ============================================================
-   CAPTIONS / TEXT
-   ============================================================ */
-
-.stMarkdown p,
-.stMarkdown li {
-    color: #B5C5C5;
-}
+/* =========================================================
+   CAPTIONS
+   ========================================================= */
 
 [data-testid="stCaptionContainer"] p {
-    color: #748C8F !important;
+    color: #7D9698 !important;
 }
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+   ========================================================= */
+
+.stDownloadButton button {
+    background: #16272D !important;
+
+    color: #DDE9E5 !important;
+
+    border: 1px solid #2A4249 !important;
+
+    border-radius: 10px !important;
+}
+
+.stDownloadButton button:hover {
+    border-color: #2DD4A8 !important;
+
+    color: #2DD4A8 !important;
+}
+
+
+/* =========================================================
+   DATAFRAME
+   ========================================================= */
+
+div[data-testid="stDataFrame"] {
+    border: 1px solid #263C43 !important;
+
+    border-radius: 12px !important;
+
+    overflow: hidden !important;
+}
+
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
+
+.stSlider [role="slider"] {
+    background-color: #2DD4A8 !important;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
 
 hr {
-    border-color: #20343A !important;
+    border-color: #20353B !important;
 }
 
-/* ============================================================
-   HIDE STREAMLIT CHROME
-   ============================================================ */
 
-#MainMenu {
-    visibility: hidden;
-}
-
-footer {
-    visibility: hidden;
-}
+/* =========================================================
+   STREAMLIT HEADER / FOOTER
+   ========================================================= */
 
 header {
     background: transparent !important;
 }
 
-/* ============================================================
-   MOBILE
-   ============================================================ */
+#MainMenu {
+    visibility: hidden !important;
+}
+
+footer {
+    visibility: hidden !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 900px) {
 
-    .hero-right {
-        display: none;
-    }
-
-    .hero-title {
-        font-size: 1.9rem;
-    }
-
     .block-container {
-        padding: 1rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 
 }
 
 </style>
-""")
+""", unsafe_allow_html=True)
 
-# =============================================================================
-# VENDORS
-# =============================================================================
+
+# ============================================================
+# VENDOR MASTER
+# ============================================================
 
 def seed_vendors():
 
     return [
-
         {
             "vendor": "Sundar Steel Traders",
             "upi_id": "sundarsteel@upi",
@@ -718,57 +476,43 @@ def seed_vendors():
             "verified": True,
             "category": "Raw Material"
         }
-
     ]
 
 
-# =============================================================================
+# ============================================================
 # SESSION STATE
-# =============================================================================
+# ============================================================
 
 if "vendors" not in st.session_state:
-
     st.session_state.vendors = seed_vendors()
 
-
 if "invoices" not in st.session_state:
-
     st.session_state.invoices = []
 
-
 if "ledger" not in st.session_state:
-
     st.session_state.ledger = []
-
 
 if "guardrails" not in st.session_state:
 
     st.session_state.guardrails = {
-
         "budget_cap": 50000,
-
         "auto_approve_ceiling": 20000,
-
-        "blacklist": [
-            "Shadow Enterprises"
-        ],
-
+        "blacklist": ["Shadow Enterprises"],
         "duplicate_window_days": 7
-
     }
 
 
 MANUAL_MINUTES_PER_INVOICE = 8
 
 VENDOR_NAMES = [
-    v["vendor"]
-    for v in st.session_state.vendors
+    vendor["vendor"]
+    for vendor in st.session_state.vendors
 ]
 
 
-# =============================================================================
-# GENERATE INVOICE
-# =============================================================================
+# ============================================================
+# INVOICE GENERATION
+# ============================================================
 
 def generate_invoice():
 
@@ -777,28 +521,16 @@ def generate_invoice():
     )
 
     amount = random.choice([
-
         random.randint(2000, 18000),
-
         random.randint(2000, 18000),
-
         random.randint(20000, 45000),
-
         random.randint(55000, 90000)
-
     ])
 
-
-    # 15% duplicate chance
-
     duplicate_test = (
-
         random.random() < 0.15
-
         and len(st.session_state.invoices) > 0
-
     )
-
 
     if duplicate_test:
 
@@ -807,16 +539,12 @@ def generate_invoice():
         )
 
         vendor = next(
-
             v
             for v in st.session_state.vendors
-
             if v["vendor"] == previous["vendor"]
-
         )
 
         amount = previous["amount"]
-
 
     return {
 
@@ -840,17 +568,14 @@ def generate_invoice():
             - timedelta(
                 minutes=random.randint(0, 120)
             )
-
     }
 
 
-# =============================================================================
-# UPI TRANSACTION MATCH
-# =============================================================================
+# ============================================================
+# UPI TRANSACTION
+# ============================================================
 
 def find_matching_upi_txn(invoice):
-
-    # Simulate 90% UPI match success
 
     if random.random() < 0.90:
 
@@ -867,20 +592,18 @@ def find_matching_upi_txn(invoice):
 
             "status":
                 "ready"
-
         }
 
         st.session_state.ledger.append(txn)
 
         return txn
 
-
     return None
 
 
-# =============================================================================
+# ============================================================
 # RULE ENGINE
-# =============================================================================
+# ============================================================
 
 def run_rule_engine(invoice):
 
@@ -890,10 +613,9 @@ def run_rule_engine(invoice):
 
     passed = True
 
-
-    # ---------------------------------------------------------
-    # 1. Vendor verification
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Vendor verification
+    # --------------------------------------------------------
 
     if not invoice["verified_vendor"]:
 
@@ -903,26 +625,21 @@ def run_rule_engine(invoice):
             "Vendor not on verified list"
         )
 
-
-    # ---------------------------------------------------------
-    # 2. Blacklist check
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Blacklist
+    # --------------------------------------------------------
 
     if invoice["vendor"] in g["blacklist"]:
 
         passed = False
 
         reasons.append(
-
-            f"Vendor '{invoice['vendor']}' "
-            f"is blacklisted"
-
+            f"Vendor '{invoice['vendor']}' is blacklisted"
         )
 
-
-    # ---------------------------------------------------------
-    # 3. Budget cap
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Budget
+    # --------------------------------------------------------
 
     if invoice["amount"] > g["budget_cap"]:
 
@@ -936,21 +653,16 @@ def run_rule_engine(invoice):
 
         )
 
-
-    # ---------------------------------------------------------
-    # 4. Duplicate detection
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Duplicate
+    # --------------------------------------------------------
 
     cutoff = (
-
         invoice["date"]
-
         - timedelta(
             days=g["duplicate_window_days"]
         )
-
     )
-
 
     for past in st.session_state.invoices:
 
@@ -962,16 +674,16 @@ def run_rule_engine(invoice):
             and past["amount"]
             == invoice["amount"]
 
-            and past["date"] >= cutoff
+            and past["date"]
+            >= cutoff
 
-            and past["decision"]
-            in (
+            and past["decision"] in [
 
                 "Auto-Approved & Released",
 
                 "Manually Approved"
 
-            )
+            ]
 
         ):
 
@@ -987,31 +699,25 @@ def run_rule_engine(invoice):
 
             break
 
-
-    # ---------------------------------------------------------
-    # 5. UPI ledger match
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # UPI match
+    # --------------------------------------------------------
 
     matched_txn = find_matching_upi_txn(
         invoice
     )
-
 
     if matched_txn is None:
 
         passed = False
 
         reasons.append(
-
-            "No matching UPI transaction "
-            "found in ledger"
-
+            "No matching UPI transaction found in ledger"
         )
 
-
-    # ---------------------------------------------------------
-    # 6. Autonomy ceiling
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Autonomy ceiling
+    # --------------------------------------------------------
 
     autonomous = (
 
@@ -1021,7 +727,6 @@ def run_rule_engine(invoice):
         <= g["auto_approve_ceiling"]
 
     )
-
 
     if passed and not autonomous:
 
@@ -1034,10 +739,9 @@ def run_rule_engine(invoice):
 
         )
 
-
-    # ---------------------------------------------------------
-    # FINAL DECISION
-    # ---------------------------------------------------------
+    # --------------------------------------------------------
+    # Final decision
+    # --------------------------------------------------------
 
     if passed and autonomous:
 
@@ -1057,7 +761,6 @@ def run_rule_engine(invoice):
             "Flagged for Review"
         )
 
-
     return (
         decision,
         reasons,
@@ -1065,9 +768,9 @@ def run_rule_engine(invoice):
     )
 
 
-# =============================================================================
-# INGEST
-# =============================================================================
+# ============================================================
+# PROCESS INVOICE
+# ============================================================
 
 def ingest_and_process():
 
@@ -1082,13 +785,9 @@ def ingest_and_process():
     invoice["reasons"] = reasons
 
     invoice["txn_id"] = (
-
         txn["txn_id"]
-
         if txn
-
         else None
-
     )
 
     st.session_state.invoices.append(
@@ -1103,141 +802,65 @@ def batch_ingest(n):
         ingest_and_process()
 
 
-# =============================================================================
+# ============================================================
 # SIDEBAR
-# =============================================================================
+# ============================================================
 
 with st.sidebar:
 
-    render_html("""
+    st.title("🛡️ PayHoplon")
 
-    <div class="sidebar-brand">
+    st.caption(
+        "GUARDRAILS FOR SMARTER PAYMENTS"
+    )
 
-        <div class="brand-row">
+    st.divider()
 
-            <div class="shield">
-                🛡️
-            </div>
-
-            <div>
-
-                <div class="brand-name">
-                    PayHoplon
-                </div>
-
-                <div class="brand-sub">
-                    GUARDRAILS FOR SMARTER PAYMENTS
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    """)
-
-
-    render_html("""
-
-    <div class="sidebar-section">
-        Simulation Controls
-    </div>
-
-    """)
-
+    st.markdown("### Simulation Controls")
 
     g = st.session_state.guardrails
 
-
     g["budget_cap"] = st.number_input(
-
         "Budget Cap per Invoice (₹)",
-
         min_value=5000,
-
         max_value=200000,
-
         value=g["budget_cap"],
-
         step=5000
-
     )
 
-
-    g["auto_approve_ceiling"] = (
-        st.number_input(
-
-            "Fully Autonomous Ceiling (₹)",
-
-            min_value=1000,
-
-            max_value=g["budget_cap"],
-
-            value=min(
-                g["auto_approve_ceiling"],
-                g["budget_cap"]
-            ),
-
-            step=1000
-
-        )
+    g["auto_approve_ceiling"] = st.number_input(
+        "Fully Autonomous Ceiling (₹)",
+        min_value=1000,
+        max_value=g["budget_cap"],
+        value=min(
+            g["auto_approve_ceiling"],
+            g["budget_cap"]
+        ),
+        step=1000
     )
-
 
     g["blacklist"] = st.multiselect(
-
         "Blacklist Vendors",
-
         VENDOR_NAMES,
-
         default=g["blacklist"]
-
     )
 
-
-    g["duplicate_window_days"] = (
-        st.slider(
-
-            "Duplicate Check Window (Days)",
-
-            1,
-
-            30,
-
-            g["duplicate_window_days"]
-
-        )
+    g["duplicate_window_days"] = st.slider(
+        "Duplicate Check Window (Days)",
+        1,
+        30,
+        g["duplicate_window_days"]
     )
 
+    st.divider()
 
-    render_html("""
-
-    <div class="guardrail-note">
-
-        💡
-
-        <b style="color:#DCE8E5 !important;">
-            Set once.
-        </b>
-
-        <br>
-
-        The agent operates inside these
-        limits — no exceptions or manual
-        overrides unless you change
-        the guardrails here.
-
-    </div>
-
-    """)
-
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
+    st.info(
+        "💡 Set once. The agent operates "
+        "inside these limits."
+    )
 
     if st.button(
-        "↻  Reset Simulation",
+        "↻ Reset Simulation",
         use_container_width=True
     ):
 
@@ -1248,84 +871,66 @@ with st.sidebar:
         st.rerun()
 
 
-# =============================================================================
-# TOP BAR
-# =============================================================================
+# ============================================================
+# HEADER
+# ============================================================
 
-render_html("""
+header_left, header_right = st.columns(
+    [4, 1]
+)
 
-<div class="topbar">
+with header_left:
 
-    <div class="user-pill">
+    st.caption(
+        "WELCOME TO"
+    )
 
-        <span class="user-dot">
-            A
-        </span>
+    st.markdown(
+        "<h1 style='margin-bottom:0;'>"
+        "Pay<span style='color:#2DD4A8;'>Hoplon</span>"
+        "</h1>",
+        unsafe_allow_html=True
+    )
 
-        Awantika&nbsp;⌄
-
-    </div>
-
-</div>
-
-""")
-
-
-# =============================================================================
-# HERO
-# =============================================================================
-
-render_html("""
-
-<div class="hero">
-
-    <div class="hero-kicker">
-        WELCOME TO
-    </div>
-
-    <div class="hero-title">
-        Pay<span class="accent">Hoplon</span>
-    </div>
-
-    <div class="hero-sub">
-
-        Autonomous invoice reconciliation
-        &amp; UPI payment release, operating
-        safely inside the guardrails you
-        control.
-
-    </div>
-
-    <div class="hero-right">
-
-        <b>
-            Automate.<br>
-            Protect.
-        </b>
-
-        <br>
-
-        <span>
-            Pay with Confidence.
-        </span>
-
-    </div>
-
-</div>
-
-""")
+    st.write(
+        "Autonomous invoice reconciliation & "
+        "UPI payment release, operating safely "
+        "inside the guardrails you control."
+    )
 
 
-# =============================================================================
-# CALCULATE KPIs
-# =============================================================================
+with header_right:
+
+    st.markdown(
+        "### 🛡️"
+    )
+
+    st.caption(
+        "Automate.\nProtect."
+    )
+
+    st.markdown(
+        "**Pay with Confidence.**"
+    )
+
+
+st.divider()
+
+
+# ============================================================
+# DATAFRAME
+# ============================================================
 
 df = pd.DataFrame(
     st.session_state.invoices
 )
 
-total = len(df)
 
+# ============================================================
+# KPI CALCULATIONS
+# ============================================================
+
+total = len(df)
 
 auto = (
 
@@ -1337,9 +942,7 @@ auto = (
     if total
 
     else 0
-
 )
-
 
 cleared = (
 
@@ -1351,9 +954,7 @@ cleared = (
     if total
 
     else 0
-
 )
-
 
 flagged = (
 
@@ -1365,9 +966,7 @@ flagged = (
     if total
 
     else 0
-
 )
-
 
 released_amt = (
 
@@ -1380,9 +979,7 @@ released_amt = (
     if total
 
     else 0
-
 )
-
 
 processed_amt = (
 
@@ -1391,9 +988,7 @@ processed_amt = (
     if total
 
     else 0
-
 )
-
 
 minutes_saved = (
     auto
@@ -1401,198 +996,79 @@ minutes_saved = (
 )
 
 hours_saved = (
-    minutes_saved / 60
+    minutes_saved
+    / 60
 )
 
 
-# =============================================================================
-# KPI ROW
-# =============================================================================
+# ============================================================
+# KPI CARDS
+# ============================================================
 
 k1, k2, k3, k4, k5 = st.columns(5)
 
+k1.metric(
+    "Invoices Processed",
+    total
+)
 
-with k1:
-
-    render_html(f"""
-
-    <div class="kpi green">
-
-        <div class="kpi-icon icon-green">
-            ▣
-        </div>
-
-        <div class="kpi-label">
-            INVOICES PROCESSED
-        </div>
-
-        <div class="kpi-value">
-            {total}
-        </div>
-
-        <div class="kpi-delta">
-            ↑ +0% vs last run
-        </div>
-
-    </div>
-
-    """)
-
-
-with k2:
-
-    percentage = (
-        f"{auto / total * 100:.0f}%"
+k2.metric(
+    "Autonomously Released",
+    auto,
+    (
+        f"{auto / total * 100:.0f}% of total"
         if total
-        else "0%"
+        else None
     )
+)
 
-    render_html(f"""
-
-    <div class="kpi green">
-
-        <div class="kpi-icon icon-green">
-            ✓
-        </div>
-
-        <div class="kpi-label">
-            AUTONOMOUSLY RELEASED
-        </div>
-
-        <div class="kpi-value">
-            {auto}
-        </div>
-
-        <div class="kpi-delta">
-            ↑ {percentage} of total
-        </div>
-
-    </div>
-
-    """)
-
-
-with k3:
-
-    percentage = (
-        f"{flagged / total * 100:.0f}%"
+k3.metric(
+    "Flagged for Review",
+    flagged,
+    (
+        f"{flagged / total * 100:.0f}% of total"
         if total
-        else "0%"
+        else None
     )
+)
 
-    render_html(f"""
+k4.metric(
+    "₹ Auto-Released",
+    f"₹{released_amt:,.0f}",
+    (
+        f"of ₹{processed_amt:,.0f} processed"
+        if total
+        else None
+    )
+)
 
-    <div class="kpi amber">
-
-        <div class="kpi-icon icon-amber">
-            !
-        </div>
-
-        <div class="kpi-label">
-            FLAGGED FOR REVIEW
-        </div>
-
-        <div class="kpi-value">
-            {flagged}
-        </div>
-
-        <div
-            class="kpi-delta"
-            style="color:#D5A64B !important;"
-        >
-            ↑ {percentage} of total
-        </div>
-
-    </div>
-
-    """)
-
-
-with k4:
-
-    render_html(f"""
-
-    <div class="kpi purple">
-
-        <div class="kpi-icon icon-purple">
-            ₹
-        </div>
-
-        <div class="kpi-label">
-            ₹ AUTO-RELEASED
-        </div>
-
-        <div class="kpi-value">
-            ₹{released_amt:,.0f}
-        </div>
-
-        <div
-            class="kpi-delta"
-            style="color:#A99CF2 !important;"
-        >
-            of ₹{processed_amt:,.0f}
-            processed
-        </div>
-
-    </div>
-
-    """)
-
-
-with k5:
-
-    render_html(f"""
-
-    <div class="kpi">
-
-        <div class="kpi-icon icon-slate">
-            ◷
-        </div>
-
-        <div class="kpi-label">
-            TIME SAVED
-        </div>
-
-        <div class="kpi-value">
-            {hours_saved:.1f} hrs
-        </div>
-
-        <div class="kpi-delta">
-            ↑ {minutes_saved:.0f} min
-            @ {MANUAL_MINUTES_PER_INVOICE}
-            min/invoice
-        </div>
-
-    </div>
-
-    """)
-
-
-st.markdown(
-    "<div style='height:15px'></div>",
-    unsafe_allow_html=True
+k5.metric(
+    "Time Saved",
+    f"{hours_saved:.1f} hrs",
+    (
+        f"{minutes_saved:.0f} min @ "
+        f"{MANUAL_MINUTES_PER_INVOICE} min/invoice"
+    )
 )
 
 
-# =============================================================================
+st.markdown("")
+
+
+# ============================================================
 # ACTION BUTTONS
-# =============================================================================
+# ============================================================
 
-b1, b2, spacer = st.columns(
-    [1.15, .95, 3.3]
+button1, button2, empty = st.columns(
+    [1.2, 1, 3]
 )
 
-
-with b1:
+with button1:
 
     if st.button(
-
-        "▶  Ingest next invoice",
-
+        "▶ Ingest Next Invoice",
         type="primary",
-
         use_container_width=True
-
     ):
 
         ingest_and_process()
@@ -1600,14 +1076,11 @@ with b1:
         st.rerun()
 
 
-with b2:
+with button2:
 
     if st.button(
-
-        "⏩  Batch ingest ×10",
-
+        "⏩ Batch Ingest ×10",
         use_container_width=True
-
     ):
 
         batch_ingest(10)
@@ -1615,251 +1088,106 @@ with b2:
         st.rerun()
 
 
-st.markdown(
-    "<div style='height:10px'></div>",
-    unsafe_allow_html=True
-)
+st.markdown("")
 
 
-# =============================================================================
+# ============================================================
 # TABS
-# =============================================================================
+# ============================================================
 
 tab1, tab2, tab3, tab4 = st.tabs([
 
-    "▣  Live Feed",
+    "▣ Live Feed",
 
-    "⚠  Exception Queue",
+    "⚠ Exception Queue",
 
-    "▦  Vendor Master",
+    "▦ Vendor Master",
 
-    "▥  Analytics"
+    "▥ Analytics"
 
 ])
 
 
-# =============================================================================
+# ============================================================
 # LIVE FEED
-# =============================================================================
+# ============================================================
 
 with tab1:
 
     if total == 0:
 
         left, right = st.columns(
-            [3.2, 1]
+            [3, 1]
         )
-
-
-        # ---------------------------------------------------------
-        # LIVE FEED EMPTY
-        # ---------------------------------------------------------
 
         with left:
 
-            render_html("""
+            st.subheader(
+                "▣ Live Invoice Feed"
+            )
 
-            <div class="panel">
+            st.caption(
+                "Invoices are processed in real time "
+                "with rule-based guardrails."
+            )
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                ">
+            st.info(
+                "No invoices yet.\n\n"
+                "Click **Ingest Next Invoice** or "
+                "**Batch Ingest ×10** to populate "
+                "the feed."
+            )
 
-                    <div>
-
-                        <div class="panel-title">
-                            ▣ &nbsp; Live Invoice Feed
-                        </div>
-
-                        <div class="panel-sub">
-                            Invoices are processed in real time
-                            with rule-based guardrails.
-                        </div>
-
-                    </div>
-
-
-                    <div style="
-                        padding:7px 11px;
-                        border-radius:999px;
-                        background:rgba(45,212,168,.10);
-                        border:1px solid rgba(45,212,168,.25);
-                        color:#2DD4A8 !important;
-                        font-size:.68rem;
-                        font-weight:700;
-                    ">
-
-                        ● Live Simulation
-
-                    </div>
-
-                </div>
-
-
-                <div style="
-                    margin-top:20px;
-                    height:205px;
-                    border:1px solid #273B42;
-                    border-radius:12px;
-                    background:#0C171D;
-
-                    display:flex;
-                    flex-direction:column;
-
-                    align-items:center;
-                    justify-content:center;
-                ">
-
-                    <div style="
-                        font-size:30px;
-                        opacity:.7;
-                    ">
-                        ▤
-                    </div>
-
-
-                    <div style="
-                        font-size:1rem;
-                        font-weight:700;
-                        color:#E4EEEB !important;
-                        margin-top:8px;
-                    ">
-
-                        No invoices yet
-
-                    </div>
-
-
-                    <div style="
-                        font-size:.75rem;
-                        color:#71898C !important;
-                        margin-top:7px;
-                    ">
-
-                        Click “Ingest next invoice”
-                        or “Batch ingest ×10”
-                        to populate the feed.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            """)
-
-
-        # ---------------------------------------------------------
-        # GUARDRAILS IN ACTION
-        # ---------------------------------------------------------
 
         with right:
 
-            render_html("""
+            st.subheader(
+                "🛡️ Guardrails in Action"
+            )
 
-            <div class="panel">
+            st.caption(
+                "Real-time checks before payment release."
+            )
 
-                <div class="panel-title">
-                    🛡️ &nbsp; Guardrails in Action
-                </div>
+            st.success(
+                "✓ Invoice amount within budget"
+            )
 
-                <div class="panel-sub">
-                    Real-time checks before any
-                    payment is released.
-                </div>
+            st.success(
+                "✓ Vendor verification"
+            )
 
+            st.success(
+                "✓ Duplicate invoice check"
+            )
 
-                <div style="
-                    margin-top:18px;
-                    line-height:2.05;
-                    font-size:.74rem;
-                ">
+            st.success(
+                "✓ UPI ID matching"
+            )
 
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        Invoice amount within budget cap
-                    </div>
+            st.success(
+                "✓ Accounting record match"
+            )
 
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        Vendor not in blacklist
-                    </div>
-
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        Duplicate invoice check
-                    </div>
-
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        UPI ID verification
-                    </div>
-
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        Accounting record match
-                    </div>
-
-                    <div style="color:#B9C9C7 !important;">
-                        🟢 &nbsp;
-                        Category &amp; policy compliance
-                    </div>
-
-                </div>
-
-
-                <div style="
-                    margin-top:18px;
-                    padding-top:13px;
-                    border-top:1px solid #26383E;
-                ">
-
-                    <span style="
-                        color:#2DD4A8 !important;
-                    ">
-                        ━━━━
-                    </span>
-
-                    <span style="
-                        color:#70878A !important;
-                        font-size:.68rem;
-                    ">
-
-                        Prevention today.<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        Fewer exceptions tomorrow.
-
-                    </span>
-
-                </div>
-
-            </div>
-
-            """)
+            st.success(
+                "✓ Policy compliance"
+            )
 
 
     else:
 
-        # ---------------------------------------------------------
-        # EXPORT
-        # ---------------------------------------------------------
-
         export_df = df.drop(
             columns=["reasons"]
         ).copy()
-
 
         export_df["date"] = (
             export_df["date"]
             .dt.strftime("%Y-%m-%d %H:%M")
         )
 
-
         st.download_button(
 
-            "⬇  Export invoice log (CSV)",
+            "⬇ Export Invoice Log",
 
             export_df.to_csv(
                 index=False
@@ -1872,10 +1200,8 @@ with tab1:
 
         )
 
+        st.markdown("")
 
-        # ---------------------------------------------------------
-        # INVOICE CARDS
-        # ---------------------------------------------------------
 
         for inv in reversed(
             st.session_state.invoices
@@ -1895,6 +1221,13 @@ with tab1:
 
                 icon = "🟡"
 
+            elif (
+                inv["decision"]
+                == "Manually Approved"
+            ):
+
+                icon = "🔵"
+
             else:
 
                 icon = "🔴"
@@ -1902,68 +1235,60 @@ with tab1:
 
             with st.expander(
 
-                f"{icon}  "
-                f"{inv['invoice_id']} — "
-                f"{inv['vendor']} — "
-                f"₹{inv['amount']:,} — "
-                f"**{inv['decision']}**"
+                f"{icon} "
+                f"{inv['invoice_id']} | "
+                f"{inv['vendor']} | "
+                f"₹{inv['amount']:,} | "
+                f"{inv['decision']}"
 
             ):
 
                 st.write(
-
                     f"**UPI ID:** "
-                    f"{inv['upi_id']}  |  "
-                    f"**Matched txn:** "
-                    f"{inv['txn_id'] or 'None'}"
-
+                    f"{inv['upi_id']}"
                 )
-
 
                 st.write(
-
-                    f"**Timestamp:** "
-                    f"{inv['date'].strftime('%d %b, %I:%M %p')}"
-
+                    f"**Matched Transaction:** "
+                    f"{inv['txn_id'] or 'None'}"
                 )
 
+                st.write(
+                    f"**Timestamp:** "
+                    f"{inv['date'].strftime('%d %b %Y, %I:%M %p')}"
+                )
 
                 if inv["reasons"]:
 
                     st.write(
-                        "**Agent reasoning:**"
+                        "**Agent Reasoning:**"
                     )
 
                     for reason in inv["reasons"]:
 
                         st.write(
-                            f"- {reason}"
+                            f"• {reason}"
                         )
 
                 else:
 
-                    st.write(
-
-                        "**Agent reasoning:** "
-                        "All checks passed cleanly — "
-                        "released without human involvement."
-
+                    st.success(
+                        "All checks passed cleanly. "
+                        "Payment released autonomously."
                     )
 
 
-# =============================================================================
+# ============================================================
 # EXCEPTION QUEUE
-# =============================================================================
+# ============================================================
 
 with tab2:
 
     exceptions = [
 
         inv
-
         for inv
         in st.session_state.invoices
-
         if inv["decision"]
         == "Flagged for Review"
 
@@ -1973,11 +1298,7 @@ with tab2:
     if not exceptions:
 
         st.success(
-
-            "No exceptions pending. "
-            "Everything either auto-released "
-            "or cleared for sign-off."
-
+            "✓ No exceptions pending."
         )
 
 
@@ -1989,10 +1310,9 @@ with tab2:
                 [3, 1, 1]
             )
 
-
             with c1:
 
-                st.markdown(
+                st.write(
 
                     f"**{inv['invoice_id']}** — "
                     f"{inv['vendor']} — "
@@ -2001,11 +1321,9 @@ with tab2:
                 )
 
                 st.caption(
-
-                    " · ".join(
+                    " • ".join(
                         inv["reasons"]
                     )
-
                 )
 
 
@@ -2013,10 +1331,10 @@ with tab2:
 
                 if st.button(
 
-                    "✓  Approve",
+                    "✓ Approve",
 
                     key=
-                    f"appr_{inv['invoice_id']}",
+                    f"approve_{inv['invoice_id']}",
 
                     use_container_width=True
 
@@ -2033,10 +1351,10 @@ with tab2:
 
                 if st.button(
 
-                    "✕  Reject",
+                    "✕ Reject",
 
                     key=
-                    f"rej_{inv['invoice_id']}",
+                    f"reject_{inv['invoice_id']}",
 
                     use_container_width=True
 
@@ -2049,48 +1367,32 @@ with tab2:
                     st.rerun()
 
 
-# =============================================================================
+# ============================================================
 # VENDOR MASTER
-# =============================================================================
+# ============================================================
 
 with tab3:
 
-    render_html("""
+    st.subheader(
+        "▦ Vendor Master"
+    )
 
-    <div class="panel">
-
-        <div class="panel-title">
-            ▦ &nbsp; Vendor Master
-        </div>
-
-        <div class="panel-sub">
-            Verified payment destinations
-            and vendor risk status.
-        </div>
-
-    </div>
-
-    """)
-
+    st.caption(
+        "Verified payment destinations "
+        "and vendor risk status."
+    )
 
     vendor_df = pd.DataFrame(
         st.session_state.vendors
     ).copy()
 
-
     vendor_df["verified"] = (
         vendor_df["verified"]
         .map({
-
-            True:
-                "✓ Verified",
-
-            False:
-                "⚠ Unverified"
-
+            True: "✓ Verified",
+            False: "⚠ Unverified"
         })
     )
-
 
     st.dataframe(
 
@@ -2103,9 +1405,9 @@ with tab3:
     )
 
 
-# =============================================================================
+# ============================================================
 # ANALYTICS
-# =============================================================================
+# ============================================================
 
 with tab4:
 
@@ -2113,28 +1415,19 @@ with tab4:
 
         st.info(
 
-            "Ingest some invoices first — "
-            "try Batch ingest ×10 for a full "
-            "dataset to chart."
+            "Run the simulation first. "
+            "Batch Ingest ×10 is the fastest "
+            "way to generate analytics."
 
         )
-
 
     else:
 
-        chart_df = df.copy()
-
-
         chart_df = (
-
-            chart_df
-
+            df
             .sort_values("date")
-
             .reset_index(drop=True)
-
         )
-
 
         chart_df["cumulative_released"] = (
 
@@ -2151,7 +1444,6 @@ with tab4:
 
         )
 
-
         chart_df["seq"] = range(
 
             1,
@@ -2161,33 +1453,31 @@ with tab4:
         )
 
 
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
+        # ROW 1
+        # ------------------------------------------------------
+
+        col1, col2 = st.columns(2)
+
+
+        # ------------------------------------------------------
         # DECISION BREAKDOWN
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
 
-        row1c1, row1c2 = st.columns(2)
-
-
-        with row1c1:
+        with col1:
 
             decision_counts = (
 
                 chart_df["decision"]
-
                 .value_counts()
-
                 .reset_index()
 
             )
 
-
             decision_counts.columns = [
-
                 "Decision",
                 "Count"
-
             ]
-
 
             color_map = {
 
@@ -2208,8 +1498,7 @@ with tab4:
 
             }
 
-
-            fig_pie = px.pie(
+            fig = px.pie(
 
                 decision_counts,
 
@@ -2217,10 +1506,9 @@ with tab4:
 
                 values="Count",
 
-                title=
-                "Decision breakdown",
+                hole=0.55,
 
-                hole=.58,
+                title="Decision Breakdown",
 
                 color="Decision",
 
@@ -2231,16 +1519,15 @@ with tab4:
 
             )
 
-
-            fig_pie.update_layout(
+            fig.update_layout(
 
                 paper_bgcolor="#101C22",
 
                 plot_bgcolor="#101C22",
 
-                font_color="#C9D6D4",
+                font_color="#D8E3E1",
 
-                title_font_color="#EAF3F0",
+                title_font_color="#F1F7F5",
 
                 legend_font_color="#AFC0BE",
 
@@ -2253,37 +1540,22 @@ with tab4:
 
             )
 
-
-            fig_pie.update_traces(
-
-                textinfo="percent",
-
-                marker=dict(
-                    line=dict(
-                        color="#101C22",
-                        width=2
-                    )
-                )
-
-            )
-
-
             st.plotly_chart(
 
-                fig_pie,
+                fig,
 
                 use_container_width=True
 
             )
 
 
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
         # CUMULATIVE RELEASE
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
 
-        with row1c2:
+        with col2:
 
-            fig_cum = px.line(
+            fig = px.line(
 
                 chart_df,
 
@@ -2291,8 +1563,10 @@ with tab4:
 
                 y="cumulative_released",
 
+                markers=True,
+
                 title=
-                "Cumulative ₹ auto-released",
+                "Cumulative ₹ Auto-Released",
 
                 labels={
 
@@ -2300,18 +1574,15 @@ with tab4:
                         "Invoice #",
 
                     "cumulative_released":
-                        "₹ released"
+                        "₹ Released"
 
                 },
-
-                markers=True,
 
                 template="plotly_dark"
 
             )
 
-
-            fig_cum.update_traces(
+            fig.update_traces(
 
                 line_color="#2DD4A8",
 
@@ -2324,16 +1595,15 @@ with tab4:
 
             )
 
-
-            fig_cum.update_layout(
+            fig.update_layout(
 
                 paper_bgcolor="#101C22",
 
                 plot_bgcolor="#101C22",
 
-                font_color="#C9D6D4",
+                font_color="#D8E3E1",
 
-                title_font_color="#EAF3F0",
+                title_font_color="#F1F7F5",
 
                 margin=dict(
                     t=55,
@@ -2344,44 +1614,39 @@ with tab4:
 
             )
 
-
-            fig_cum.update_xaxes(
-
+            fig.update_xaxes(
                 gridcolor="#20343A",
-
                 zeroline=False
-
             )
 
-
-            fig_cum.update_yaxes(
-
+            fig.update_yaxes(
                 gridcolor="#20343A",
-
                 zeroline=False
-
             )
-
 
             st.plotly_chart(
 
-                fig_cum,
+                fig,
 
                 use_container_width=True
 
             )
 
 
-        # ---------------------------------------------------------
-        # INVOICE DISTRIBUTION + VENDOR VOLUME
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
+        # ROW 2
+        # ------------------------------------------------------
 
-        row2c1, row2c2 = st.columns(2)
+        col3, col4 = st.columns(2)
 
 
-        with row2c1:
+        # ------------------------------------------------------
+        # AMOUNT DISTRIBUTION
+        # ------------------------------------------------------
 
-            fig_hist = px.histogram(
+        with col3:
+
+            fig = px.histogram(
 
                 chart_df,
 
@@ -2390,42 +1655,39 @@ with tab4:
                 nbins=15,
 
                 title=
-                "Invoice amount distribution",
+                "Invoice Amount Distribution",
 
                 labels={
                     "amount":
-                        "Invoice amount (₹)"
+                        "Invoice Amount (₹)"
                 },
 
                 template="plotly_dark"
 
             )
 
-
-            fig_hist.update_traces(
-
+            fig.update_traces(
                 marker_color="#2DD4A8"
-
             )
 
-
-            fig_hist.add_vline(
+            fig.add_vline(
 
                 x=
                 st.session_state
-                .guardrails["budget_cap"],
+                .guardrails[
+                    "budget_cap"
+                ],
 
                 line_dash="dash",
 
                 line_color="#F06A73",
 
                 annotation_text=
-                "Budget cap"
+                "Budget Cap"
 
             )
 
-
-            fig_hist.add_vline(
+            fig.add_vline(
 
                 x=
                 st.session_state
@@ -2438,20 +1700,19 @@ with tab4:
                 line_color="#2DD4A8",
 
                 annotation_text=
-                "Auto ceiling"
+                "Auto Ceiling"
 
             )
 
-
-            fig_hist.update_layout(
+            fig.update_layout(
 
                 paper_bgcolor="#101C22",
 
                 plot_bgcolor="#101C22",
 
-                font_color="#C9D6D4",
+                font_color="#D8E3E1",
 
-                title_font_color="#EAF3F0",
+                title_font_color="#F1F7F5",
 
                 margin=dict(
                     t=55,
@@ -2462,35 +1723,20 @@ with tab4:
 
             )
 
-
-            fig_hist.update_xaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
-            fig_hist.update_yaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
             st.plotly_chart(
 
-                fig_hist,
+                fig,
 
                 use_container_width=True
 
             )
 
 
-        with row2c2:
+        # ------------------------------------------------------
+        # VENDOR VOLUME
+        # ------------------------------------------------------
+
+        with col4:
 
             vendor_summary = (
 
@@ -2521,8 +1767,7 @@ with tab4:
 
             )
 
-
-            fig_vendor = px.bar(
+            fig = px.bar(
 
                 vendor_summary,
 
@@ -2533,12 +1778,12 @@ with tab4:
                 orientation="h",
 
                 title=
-                "Volume by vendor (₹ processed)",
+                "Volume by Vendor",
 
                 labels={
 
                     "total_amount":
-                        "₹ total processed",
+                        "₹ Total Processed",
 
                     "vendor":
                         ""
@@ -2549,23 +1794,19 @@ with tab4:
 
             )
 
-
-            fig_vendor.update_traces(
-
+            fig.update_traces(
                 marker_color="#2DD4A8"
-
             )
 
-
-            fig_vendor.update_layout(
+            fig.update_layout(
 
                 paper_bgcolor="#101C22",
 
                 plot_bgcolor="#101C22",
 
-                font_color="#C9D6D4",
+                font_color="#D8E3E1",
 
-                title_font_color="#EAF3F0",
+                title_font_color="#F1F7F5",
 
                 margin=dict(
                     t=55,
@@ -2576,40 +1817,20 @@ with tab4:
 
             )
 
-
-            fig_vendor.update_xaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
-            fig_vendor.update_yaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
             st.plotly_chart(
 
-                fig_vendor,
+                fig,
 
                 use_container_width=True
 
             )
 
 
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
         # EXCEPTION REASONS
-        # ---------------------------------------------------------
+        # ------------------------------------------------------
 
-        all_reasons = []
-
+        reasons = []
 
         for inv in st.session_state.invoices:
 
@@ -2617,52 +1838,46 @@ with tab4:
 
                 if "budget cap" in reason:
 
-                    all_reasons.append(
-                        "Over budget cap"
+                    reasons.append(
+                        "Over Budget Cap"
                     )
 
                 elif "blacklisted" in reason:
 
-                    all_reasons.append(
-                        "Blacklisted vendor"
+                    reasons.append(
+                        "Blacklisted Vendor"
                     )
 
                 elif "not on verified list" in reason:
 
-                    all_reasons.append(
-                        "Unverified vendor"
+                    reasons.append(
+                        "Unverified Vendor"
                     )
 
                 elif "duplicate" in reason.lower():
 
-                    all_reasons.append(
-                        "Possible duplicate"
+                    reasons.append(
+                        "Possible Duplicate"
                     )
 
                 elif "No matching UPI" in reason:
 
-                    all_reasons.append(
-                        "No matching UPI transaction"
+                    reasons.append(
+                        "No Matching UPI"
                     )
 
                 elif "ceiling" in reason:
 
-                    all_reasons.append(
-                        "Above auto-approve ceiling"
-                    )
-
-                else:
-
-                    all_reasons.append(
-                        reason
+                    reasons.append(
+                        "Above Auto Ceiling"
                     )
 
 
-        if all_reasons:
+        if reasons:
 
             reason_df = (
 
-                pd.Series(all_reasons)
+                pd.Series(reasons)
 
                 .value_counts()
 
@@ -2670,16 +1885,12 @@ with tab4:
 
             )
 
-
             reason_df.columns = [
-
                 "Reason",
                 "Count"
-
             ]
 
-
-            fig_reasons = px.bar(
+            fig = px.bar(
 
                 reason_df,
 
@@ -2690,21 +1901,17 @@ with tab4:
                 orientation="h",
 
                 title=
-                "Why invoices got flagged / routed for review",
+                "Why Invoices Were Flagged",
 
                 template="plotly_dark"
 
             )
 
-
-            fig_reasons.update_traces(
-
+            fig.update_traces(
                 marker_color="#F06A73"
-
             )
 
-
-            fig_reasons.update_layout(
+            fig.update_layout(
 
                 showlegend=False,
 
@@ -2712,9 +1919,9 @@ with tab4:
 
                 plot_bgcolor="#101C22",
 
-                font_color="#C9D6D4",
+                font_color="#D8E3E1",
 
-                title_font_color="#EAF3F0",
+                title_font_color="#F1F7F5",
 
                 margin=dict(
                     t=55,
@@ -2725,33 +1932,13 @@ with tab4:
 
             )
 
-
-            fig_reasons.update_xaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
-            fig_reasons.update_yaxes(
-
-                gridcolor="#20343A",
-
-                zeroline=False
-
-            )
-
-
             st.plotly_chart(
 
-                fig_reasons,
+                fig,
 
                 use_container_width=True
 
             )
-
 
         else:
 
@@ -2763,34 +1950,13 @@ with tab4:
             )
 
 
-# =============================================================================
+# ============================================================
 # FOOTER
-# =============================================================================
+# ============================================================
 
-render_html("""
+st.divider()
 
-<div style="
-    margin-top:30px;
-    padding-top:16px;
-    border-top:1px solid #1D3036;
-
-    display:flex;
-    justify-content:space-between;
-
-    color:#61787B !important;
-
-    font-size:.68rem;
-">
-
-    <span>
-        “Control today. Confidence tomorrow.”
-    </span>
-
-    <span>
-        PayHoplon &nbsp;|&nbsp;
-        Bitmela Launchpad Ideathon 🌱
-    </span>
-
-</div>
-
-""")
+st.caption(
+    "Control today. Confidence tomorrow. "
+    " | PayHoplon • Bitmela Launchpad Ideathon"
+)
